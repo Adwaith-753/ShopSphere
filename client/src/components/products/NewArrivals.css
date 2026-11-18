@@ -1,0 +1,108 @@
+
+.new-arrivals-section {
+  width: 90%;
+  margin: 55px auto;
+}
+
+.new-arrivals-heading {
+  margin-bottom: 25px;
+}
+
+.new-arrivals-heading h2 {
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.new-arrivals-heading p {
+  color: #64748b;
+}
+
+.new-arrivals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.new-arrival-card {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.new-arrival-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.new-arrival-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 6px 10px;
+  background: #16a34a;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.new-arrival-image {
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+}
+
+.new-arrival-image span {
+  font-size: 65px;
+}
+
+.new-arrival-info {
+  padding: 18px;
+}
+
+.new-arrival-info h3 {
+  font-size: 17px;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.new-arrival-info p {
+  color: #2563eb;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.new-arrival-info button {
+  width: 100%;
+  padding: 11px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.new-arrival-info button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 900px) {
+  .new-arrivals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .new-arrivals-grid {
+    grid-template-columns: 1fr;
+  }
+}

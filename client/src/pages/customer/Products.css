@@ -1,0 +1,68 @@
+
+.products-page {
+  width: 90%;
+  min-height: 350px;
+  margin: 0 auto;
+  padding: 45px 0;
+}
+
+.products-page h1 {
+  color: #1e293b;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.products-page p {
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Search dropdown positioning */
+.navbar-search {
+  position: relative;
+}
+
+/* Dropdown container */
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Individual suggestion */
+.search-suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.search-suggestion:hover {
+  background-color: #f1f5f9;
+}
+
+.search-suggestion strong {
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.search-suggestion span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.search-suggestions > p {
+  padding: 15px;
+  color: #64748b;
+}
