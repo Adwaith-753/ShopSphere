@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getProducts } from "../../services/productService";
+import { CartContext } from "../../context/CartContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import "./ProductDetails.css";
 
 function ProductDetails() {
   const { id } = useParams();
+
+  // Access the Cart Context
+  const { addToCart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +41,19 @@ function ProductDetails() {
     fetchProduct();
   }, [id]);
 
+  // Add product to cart
+  const handleAddToCart = () => {
+    if (!user) {
+      navigate("/login", {
+        state: { from: `/products/${id}` },
+      });
+
+      return;
+    }
+
+    addToCart(product, quantity);
+    alert(`${product.name} added to cart!`);
+  };
   if (loading) {
     return (
       <main className="product-details-page">Loading product details...</main>
@@ -95,8 +115,13 @@ function ProductDetails() {
             <h3>₹{(product.price * quantity).toLocaleString("en-IN")}</h3>
           </div>
 
+          {/* Action Buttons */}
           <div className="product-action-buttons">
-            <button className="add-to-cart-btn" type="button">
+            <button
+              className="add-to-cart-btn"
+              type="button"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
 

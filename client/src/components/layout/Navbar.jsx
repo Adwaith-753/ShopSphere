@@ -1,36 +1,87 @@
-import { useEffect, useState } from "react";
-import { Heart, ShoppingCart, UserRound } from "lucide-react";
+
+import { useEffect, useState, useContext } from "react";
+
+import {
+  Heart,
+  ShoppingCart,
+  UserRound,
+  LogOut,
+  Menu,
+  X,
+  Home,
+  Package,
+  Grid2X2,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
+
 import { getProducts } from "../../services/productService";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { CartContext } from "../../context/CartContext.jsx";
+import { WishlistContext } from "../../context/WishlistContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
+
 import "./Navbar.css";
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+
   const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get("search") || "";
+  // Cart
+  const { cartItems } = useContext(CartContext);
+  const cartCount = cartItems.length;
 
-    setSearchTerm(query);
-    setShowSuggestions(false);
-  }, [location.search]);
+  // Wishlist
+  const { wishlistItems } = useContext(WishlistContext);
+  const wishlistCount = wishlistItems.length;
 
+  // Authentication
+  const { user, logout, loading } = useContext(AuthContext);
+
+  // Toggle hamburger menu
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+    setIsProfileOpen(false);
+  };
+
+  // Close hamburger menu
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  // Toggle profile dropdown
+  const toggleProfile = () => {
+    setIsProfileOpen((prev) => !prev);
+  };
+
+  // Logout
+  const handleLogout = () => {
+    logout();
+    setIsProfileOpen(false);
+    closeMenu();
+    navigate("/", { replace: true });
+  };
+
+  // Search
   const handleSearch = () => {
     const query = searchTerm.trim();
 
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
     setShowSuggestions(false);
+    closeMenu();
 
     navigate(`/products?search=${encodeURIComponent(query)}`);
   };
 
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -44,7 +95,7 @@ function Navbar() {
     fetchProducts();
   }, []);
 
-  // Find matching products
+  // Filter products
   const filteredProducts = products.filter((product) => {
     const search = searchTerm.trim().toLowerCase();
 
@@ -55,43 +106,46 @@ function Navbar() {
     );
   });
 
-  // Get unique categories
+  // Get categories
   const categories = [
     ...new Set(products.map((product) => product.category).filter(Boolean)),
   ];
 
-  // Find matching categories
   const filteredCategories = categories.filter((category) =>
-    category.toLowerCase().includes(searchTerm.trim().toLowerCase()),
+    category.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
 
-  // Select a product suggestion
+  // Select product suggestion
   const handleProductSelect = (product) => {
     setSearchTerm(product.name);
     setShowSuggestions(false);
-
     navigate(`/products?search=${encodeURIComponent(product.name)}`);
   };
 
-  // Select a category suggestion
+  // Select category suggestion
   const handleCategorySelect = (category) => {
     setSearchTerm(category);
     setShowSuggestions(false);
-
     navigate(`/products?search=${encodeURIComponent(category)}`);
   };
 
   return (
     <nav className="navbar">
+
+      {/* Logo */}
       <div className="navbar-logo">
-        <h2>ShopSphere</h2>
+        <Link to="/" onClick={closeMenu}>
+          <h2>ShopSphere</h2>
+        </Link>
       </div>
 
+      {/* Desktop Navigation */}
       <div className="navbar-links">
-        <a href="/">Home</a>
-        <a href="/categories">Categories</a>
+        <Link to="/">Home</Link>
+        <Link to="/categories">Categories</Link>
       </div>
 
+      {/* Search Bar */}
       <div className="navbar-search">
         <input
           type="text"
@@ -109,11 +163,14 @@ function Navbar() {
           }}
         />
 
-        <button onClick={handleSearch}>Search</button>
+        <button type="button" onClick={handleSearch}>
+          Search
+        </button>
 
+        {/* Search Suggestions */}
         {showSuggestions && searchTerm.trim() !== "" && (
           <div className="search-suggestions">
-            {/* Category suggestions */}
+
             {filteredCategories.map((category) => (
               <div
                 className="search-suggestion"
@@ -125,7 +182,6 @@ function Navbar() {
               </div>
             ))}
 
-            {/* Product suggestions */}
             {filteredProducts.map((product) => (
               <div
                 className="search-suggestion"
@@ -137,31 +193,239 @@ function Navbar() {
               </div>
             ))}
 
-            {/* No results message */}
             {filteredCategories.length === 0 &&
               filteredProducts.length === 0 && (
                 <p>No matching products or categories found.</p>
               )}
+
           </div>
         )}
       </div>
 
+      {/* Desktop Actions */}
       <div className="navbar-actions">
-        <a href="/wishlist">
+
+        <Link to="/wishlist">
           <Heart size={19} />
-          <span>Wishlist</span>
-        </a>
+          <span>
+            Wishlist {!loading && user ? `(${wishlistCount})` : ""}
+          </span>
+        </Link>
 
-        <a href="/cart">
+        <Link to="/cart">
           <ShoppingCart size={19} />
-          <span>Cart</span>
-        </a>
+          <span>
+            Cart {!loading && user ? `(${cartCount})` : ""}
+          </span>
+        </Link>
 
-        <a href="/login">
-          <UserRound size={19} />
-          <span>Login</span>
-        </a>
+        {!loading &&
+          (user ? (
+            <div className="profile-dropdown-container">
+
+              {/* Desktop Profile Button */}
+              <button
+                type="button"
+                className="profile-toggle-btn"
+                onClick={toggleProfile}
+                aria-expanded={isProfileOpen}
+              >
+                <UserRound size={20} />
+
+                <span>{user.name}</span>
+
+                <ChevronDown
+                  size={16}
+                  className={
+                    isProfileOpen
+                      ? "profile-chevron active"
+                      : "profile-chevron"
+                  }
+                />
+              </button>
+
+              {/* Desktop Profile Dropdown */}
+              {isProfileOpen && (
+                <div className="profile-dropdown">
+
+                  <div className="profile-dropdown-header">
+                    <div className="profile-avatar">
+                      <UserRound size={28} />
+                    </div>
+
+                    <div className="profile-user-info">
+                      <strong>{user.name}</strong>
+                      <span>{user.email}</span>
+                    </div>
+                  </div>
+
+                  {/* View Profile */}
+                  <button
+                    type="button"
+                    className="profile-dropdown-item"
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    <UserRound size={19} />
+                    <span>View Profile</span>
+                    <ChevronRight size={17} />
+                  </button>
+
+                  {/* Logout */}
+                  <button
+                    type="button"
+                    className="profile-dropdown-item profile-logout-item"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={19} />
+                    <span>Logout</span>
+                    <ChevronRight size={17} />
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+          ) : (
+            <Link to="/login">
+              <UserRound size={19} />
+              <span>Login</span>
+            </Link>
+          ))}
+
       </div>
+
+      {/* Mobile Actions - Outside Hamburger */}
+      <div className="mobile-navbar-actions">
+
+        {/* Mobile Cart */}
+        <Link
+          to="/cart"
+          className="mobile-icon-link"
+          aria-label="Cart"
+          onClick={closeMenu}
+        >
+          <ShoppingCart size={22} />
+
+          {!loading && user && cartCount > 0 && (
+            <span className="mobile-count">{cartCount}</span>
+          )}
+        </Link>
+
+        {/* Mobile Profile */}
+        {!loading &&
+          (user ? (
+            <div className="mobile-profile-container">
+
+              <button
+                type="button"
+                className="mobile-profile-toggle"
+                onClick={toggleProfile}
+                aria-label="Open profile"
+                aria-expanded={isProfileOpen}
+              >
+                <UserRound size={23} />
+              </button>
+
+              {/* Mobile Profile Dropdown */}
+              {isProfileOpen && (
+                <div className="profile-dropdown mobile-profile-dropdown">
+
+                  <div className="profile-dropdown-header">
+                    <div className="profile-avatar">
+                      <UserRound size={28} />
+                    </div>
+
+                    <div className="profile-user-info">
+                      <strong>{user.name}</strong>
+                      <span>{user.email}</span>
+                    </div>
+                  </div>
+
+                  {/* View Profile */}
+                  <button
+                    type="button"
+                    className="profile-dropdown-item"
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    <UserRound size={19} />
+                    <span>View Profile</span>
+                    <ChevronRight size={17} />
+                  </button>
+
+                  {/* Logout */}
+                  <button
+                    type="button"
+                    className="profile-dropdown-item profile-logout-item"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={19} />
+                    <span>Logout</span>
+                    <ChevronRight size={17} />
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="mobile-icon-link"
+              aria-label="Login"
+            >
+              <UserRound size={23} />
+            </Link>
+          ))}
+
+      </div>
+
+      {/* Hamburger Button */}
+      <button
+        type="button"
+        className="mobile-menu-toggle"
+        onClick={toggleMenu}
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMenuOpen}
+      >
+        {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
+      </button>
+
+      {/* Hamburger Menu */}
+      <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+
+        <div className="mobile-menu-links">
+
+          <Link to="/" onClick={closeMenu}>
+            <Home size={19} />
+            Home
+          </Link>
+
+          <Link to="/products" onClick={closeMenu}>
+            <Package size={19} />
+            Products
+          </Link>
+
+          <Link to="/categories" onClick={closeMenu}>
+            <Grid2X2 size={19} />
+            Categories
+          </Link>
+
+          {/* Wishlist remains inside Hamburger */}
+          <Link to="/wishlist" onClick={closeMenu}>
+            <Heart size={19} />
+            Wishlist
+            {!loading && user && ` (${wishlistCount})`}
+          </Link>
+
+        </div>
+      </div>
+
     </nav>
   );
 }

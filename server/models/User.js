@@ -35,6 +35,18 @@ const userSchema = new mongoose.Schema(
       enum: ["not-applied", "pending", "approved", "rejected"],
       default: "not-applied",
     },
+
+    passwordChangeTokenHash: {
+      type: String,
+      default: null,
+      select: false,
+    },
+
+    passwordChangeTokenExpiresAt: {
+      type: Date,
+      default: null,
+      select: false,
+    },
   },
   {
     timestamps: true,

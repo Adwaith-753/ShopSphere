@@ -1,0 +1,387 @@
+
+/* Main Profile Page */
+.customer-profile-page {
+  min-height: 75vh;
+  padding: 50px 20px;
+  background: #f8fafc;
+}
+
+.customer-profile-container {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Page Heading */
+.customer-profile-heading {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.customer-profile-heading h1 {
+  margin-bottom: 8px;
+  color: #1e293b;
+  font-size: 30px;
+}
+
+.customer-profile-heading p {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* Profile Card */
+.customer-profile-card {
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 35px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+  text-align: center;
+}
+
+/* Avatar */
+.customer-profile-avatar {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  background: #eff6ff;
+  border-radius: 50%;
+}
+
+.customer-profile-card > h2 {
+  margin-bottom: 6px;
+  color: #1e293b;
+  font-size: 23px;
+}
+
+.customer-profile-role {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Divider */
+.customer-profile-divider {
+  height: 1px;
+  margin: 28px 0;
+  background: #e2e8f0;
+}
+
+/* Sections */
+.profile-section {
+  width: 100%;
+  text-align: left;
+}
+
+.profile-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: #2563eb;
+}
+
+.profile-section-heading h3 {
+  margin-bottom: 5px;
+  color: #1e293b;
+  font-size: 18px;
+}
+
+.profile-section-heading p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Profile Information */
+.customer-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+  padding: 15px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.customer-profile-info-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  background: #eff6ff;
+  border-radius: 9px;
+}
+
+/* Form Fields */
+.customer-profile-field {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.customer-profile-field label {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.customer-profile-field strong {
+  overflow-wrap: anywhere;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.customer-profile-field input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customer-profile-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Password Input and Visibility */
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 45px;
+}
+
+.password-visibility-btn {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.password-visibility-btn:hover {
+  color: #2563eb;
+}
+
+/* Main Action Button */
+.customer-profile-edit-btn {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.customer-profile-edit-btn:hover {
+  background: #1d4ed8;
+}
+
+.customer-profile-edit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Action Buttons */
+.customer-profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.customer-profile-actions .customer-profile-edit-btn {
+  margin-top: 0;
+}
+
+/* Cancel Button */
+.customer-profile-cancel-btn {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.customer-profile-cancel-btn:hover {
+  background: #f1f5f9;
+}
+
+.customer-profile-cancel-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Password Stage */
+.password-stage-heading {
+  margin: 5px 0 20px;
+}
+
+.password-stage-heading span {
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.password-stage-heading h4 {
+  margin: 7px 0;
+  color: #1e293b;
+  font-size: 17px;
+}
+
+.password-stage-heading p {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Password Requirement */
+.password-requirement {
+  margin: 0 0 15px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Messages */
+.profile-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.profile-error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.profile-success {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.profile-message svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Forgot Password Note */
+.forgot-password-note {
+  margin: 5px 0 15px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.forgot-password-note a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgot-password-note a:hover {
+  text-decoration: underline;
+}
+
+/* Loading */
+.profile-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .customer-profile-page {
+    padding: 30px 15px;
+  }
+
+  .customer-profile-heading h1 {
+    font-size: 25px;
+  }
+
+  .customer-profile-card {
+    padding: 25px 18px;
+  }
+
+  .customer-profile-info {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .customer-profile-info strong {
+    font-size: 14px;
+  }
+
+  .customer-profile-field input {
+    padding: 10px;
+    padding-right: 40px;
+    font-size: 14px;
+  }
+
+  .customer-profile-actions {
+    gap: 10px;
+  }
+
+  .profile-section-heading h3 {
+    font-size: 16px;
+  }
+}

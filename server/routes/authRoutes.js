@@ -11,6 +11,11 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
+// console.log("registerUser:", typeof registerUser);
+// console.log("loginUser:", typeof loginUser);
+// console.log("getMe:", typeof getMe);
+// console.log("protect:", typeof protect);
+
 // Customer registration
 router.post("/register", registerUser);
 

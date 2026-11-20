@@ -67,3 +67,112 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Wishlist Heart Button */
+
+.product-card {
+  position: relative;
+}
+
+.wishlist-heart-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wishlist-heart-btn:hover {
+  color: #ef4444;
+  border-color: #fecaca;
+  background: #fff1f2;
+}
+
+.wishlist-heart-btn.active {
+  color: #ef4444;
+  border-color: #fecaca;
+  background: #fff1f2;
+}
+
+
+/* Add to Cart Button */
+.product-add-cart-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  margin-top: 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.product-add-cart-btn:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.product-add-cart-btn:active {
+  transform: translateY(0);
+}
+
+
+/* Product Action Buttons - Two Columns */
+.product-card-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Add to Cart */
+.product-card-actions .product-add-cart-btn {
+  width: 100%;
+  margin-top: 0;
+  padding: 11px 5px;
+  font-size: 13px;
+}
+
+/* View Details */
+.product-card-actions .product-view-details-btn {
+  width: 100%;
+  padding: 11px 5px;
+  background-color: #ffffff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.product-card-actions .product-view-details-btn:hover {
+  background-color: #eff6ff;
+}
+
+/* Small screens */
+@media (max-width: 380px) {
+  .product-card-actions {
+    grid-template-columns: 1fr;
+  }
+}
+

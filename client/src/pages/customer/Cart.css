@@ -1,0 +1,317 @@
+
+/* ========================================
+   1. CART PAGE
+======================================== */
+
+.cart-page {
+  min-height: 70vh;
+  padding: 40px 20px;
+  background: #f8fafc;
+}
+
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cart-container > h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+
+.cart-item-count {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+/* ========================================
+   2. CART ITEMS
+======================================== */
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 25px;
+  padding: 25px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.cart-item-image {
+  width: 180px;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border-radius: 10px;
+  color: #64748b;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-details h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+
+.cart-item-category {
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.cart-item-price {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.cart-item-subtotal {
+  font-weight: 600;
+  color: #2563eb;
+  margin-top: 12px;
+}
+
+/* ========================================
+   3. QUANTITY CONTROLS
+======================================== */
+
+.cart-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.cart-quantity-controls button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cart-quantity-controls button:hover:not(:disabled) {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.cart-quantity-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cart-quantity-controls span:nth-child(2) {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ========================================
+   4. REMOVE PRODUCT BUTTON
+======================================== */
+
+.cart-item-details button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cart-item-details button:hover {
+  background: #fecaca;
+}
+
+/* ========================================
+   5. CLEAR CART BUTTON
+======================================== */
+
+.clear-cart-btn {
+  margin: 12px 0 20px;
+  padding: 10px 18px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clear-cart-btn:hover {
+  background: #fecaca;
+}
+
+/* ========================================
+   6. ORDER SUMMARY
+======================================== */
+
+.cart-summary {
+  margin-top: 30px;
+  margin-left: auto;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.cart-summary h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #1e293b;
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #475569;
+}
+
+.cart-checkout-btn {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.cart-checkout-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ========================================
+   7. EMPTY CART - FULL PAGE DESIGN
+======================================== */
+
+.cart-empty {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.empty-cart-icon {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 50%;
+  margin-bottom: 25px;
+}
+
+.cart-empty h1 {
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.cart-empty p {
+  max-width: 450px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.continue-shopping-btn {
+  display: inline-block;
+  padding: 13px 25px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 7px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.continue-shopping-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ========================================
+   8. RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 25px 15px;
+  }
+
+  .cart-container > h1 {
+    font-size: 25px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .cart-item-image {
+    width: 100%;
+    min-height: 180px;
+  }
+
+  .cart-item-details h2 {
+    font-size: 20px;
+  }
+
+  .cart-summary {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .cart-empty {
+    min-height: 60vh;
+    padding: 30px 15px;
+  }
+
+  .cart-empty h1 {
+    font-size: 23px;
+  }
+}
