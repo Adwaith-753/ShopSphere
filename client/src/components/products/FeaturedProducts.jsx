@@ -1,38 +1,23 @@
 
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getProducts } from "../../services/productService";
 import "./FeaturedProducts.css";
 
-const products = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    price: 1999,
-    category: "Electronics",
-    emoji: "🎧",
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    price: 2499,
-    category: "Electronics",
-    emoji: "⌚",
-  },
-  {
-    id: 3,
-    name: "Wireless Mouse",
-    price: 599,
-    category: "Accessories",
-    emoji: "🖱️",
-  },
-  {
-    id: 4,
-    name: "Bluetooth Speaker",
-    price: 1499,
-    category: "Electronics",
-    emoji: "🔊",
-  },
-];
-
 function FeaturedProducts() {
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProducts()
+      .then((items) =>
+        setProducts(
+          items.filter((item) => item.isFeatured).slice(0, 4)
+        )
+      )
+      .catch(() => setProducts([]));
+  }, []);
+
   return (
     <section className="featured-section">
       <div className="featured-heading">
@@ -44,9 +29,13 @@ function FeaturedProducts() {
 
       <div className="featured-grid">
         {products.map((product) => (
-          <div className="product-card" key={product.id}>
+          <div className="product-card" key={product._id}>
             <div className="product-image">
-              <span>{product.emoji}</span>
+              {product.images?.[0]?.url ? (
+                <img src={product.images[0].url} alt={product.name} />
+              ) : (
+                <span>{product.name}</span>
+              )}
             </div>
 
             <div className="product-info">
@@ -55,7 +44,11 @@ function FeaturedProducts() {
               <p className="product-price">
                 ₹{product.price.toLocaleString("en-IN")}
               </p>
-              <button className="product-button">
+              <button
+                type="button"
+                className="product-button"
+                onClick={() => navigate(`/products/${product._id}`)}
+              >
                 View Product
               </button>
             </div>

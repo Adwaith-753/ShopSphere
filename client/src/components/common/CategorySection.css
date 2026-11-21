@@ -22,6 +22,9 @@
 }
 
 .category-card {
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
   min-height: 150px;
   padding: 20px 10px;
 

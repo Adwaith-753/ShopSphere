@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema(
       default: "customer",
     },
 
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+
     sellerApplicationStatus: {
       type: String,
       enum: ["not-applied", "pending", "approved", "rejected"],
@@ -43,6 +48,18 @@ const userSchema = new mongoose.Schema(
     },
 
     passwordChangeTokenExpiresAt: {
+      type: Date,
+      default: null,
+      select: false,
+    },
+
+    passwordResetTokenHash: {
+      type: String,
+      default: null,
+      select: false,
+    },
+
+    passwordResetTokenExpiresAt: {
       type: Date,
       default: null,
       select: false,

@@ -1,0 +1,96 @@
+
+/* ========================================
+   ShopSphere Product Skeleton Loading
+======================================== */
+
+.product-skeleton-card {
+  overflow: hidden;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #e9edf3;
+  border-radius: 6px;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+  animation: product-skeleton-shimmer 1.4s infinite;
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+}
+
+.product-skeleton-info {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 15px;
+}
+
+.skeleton-title {
+  width: 75%;
+  height: 17px;
+}
+
+.skeleton-description {
+  width: 100%;
+  height: 12px;
+}
+
+.skeleton-price {
+  width: 40%;
+  height: 19px;
+  margin-top: 5px;
+}
+
+.skeleton-button {
+  width: 100%;
+  height: 38px;
+  margin-top: 5px;
+  border-radius: 7px;
+}
+
+@keyframes product-skeleton-shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer::after {
+    animation: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -2,17 +2,16 @@
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
+import LoadingScreen from "../components/common/LoadingScreen.jsx";
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  // Wait until saved login information is checked
   if (loading) {
-    return <p>Checking login...</p>;
+    return <LoadingScreen message="Checking your account..." />;
   }
 
-  // Redirect guests to login
   if (!user) {
     return (
       <Navigate
@@ -23,7 +22,6 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  // Allow logged-in users
   return children;
 }
 

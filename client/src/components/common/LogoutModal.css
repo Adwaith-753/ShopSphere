@@ -1,0 +1,138 @@
+
+/* Logout Modal Overlay */
+
+.logout-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+/* Logout Modal */
+
+.logout-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 35px 28px 28px;
+  background: #ffffff;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: logoutModalAppear 0.2s ease-out;
+}
+
+@keyframes logoutModalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Close Button */
+
+.logout-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.logout-modal-close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+/* Icon */
+
+.logout-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 25px;
+}
+
+/* Text */
+
+.logout-modal h2 {
+  margin: 0 0 12px;
+  color: #1e293b;
+  font-size: 23px;
+}
+
+.logout-modal p {
+  margin: 0 0 25px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Action Buttons */
+
+.logout-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logout-modal-actions button {
+  flex: 1;
+  min-height: 44px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.logout-cancel-btn {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.logout-cancel-btn:hover {
+  background: #e2e8f0;
+}
+
+.logout-confirm-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.logout-confirm-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .logout-modal {
+    padding: 32px 20px 22px;
+  }
+
+  .logout-modal-actions {
+    flex-direction: column;
+  }
+}

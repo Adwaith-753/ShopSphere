@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getProducts } from "../../services/productService";
 import ProductCard from "../../components/products/ProductCard";
+import ProductSkeleton from "../../components/products/ProductSkeleton";
 import "./Products.css";
 
 function Products() {
@@ -28,10 +29,13 @@ function Products() {
   // Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
+      setError("");
+
       try {
         const data = await getProducts();
         setProducts(data);
-      } catch{
+      } catch {
         setError("Unable to load products. Please try again.");
       } finally {
         setLoading(false);
@@ -41,12 +45,30 @@ function Products() {
     fetchProducts();
   }, []);
 
+  // Product loading skeleton
   if (loading) {
-    return <main className="products-page">Loading products...</main>;
+    return (
+      <main className="products-page">
+        <h1>Discover Products</h1>
+        <p>Finding the best products for you...</p>
+
+        <ProductSkeleton count={8} />
+      </main>
+    );
   }
 
+  // Error message
   if (error) {
-    return <main className="products-page">{error}</main>;
+    return (
+      <main className="products-page">
+        <h1>Products</h1>
+        <p className="no-products">{error}</p>
+
+        <button type="button" onClick={() => window.location.reload()}>
+          Try Again
+        </button>
+      </main>
+    );
   }
 
   return (

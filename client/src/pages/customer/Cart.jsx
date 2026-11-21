@@ -57,7 +57,14 @@ if (cartItems.length === 0) {
           {cartItems.map((item) => (
             <div className="cart-item" key={item._id}>
               <div className="cart-item-image">
-                <span>Image Coming Soon</span>
+                {item.images?.[0]?.url ? (
+                  <img
+                    src={item.images[0].url}
+                    alt={item.images[0].alt || item.name}
+                  />
+                ) : (
+                  <span>{item.name}</span>
+                )}
               </div>
 
               <div className="cart-item-details">
@@ -84,6 +91,10 @@ if (cartItems.length === 0) {
                   <button
                     type="button"
                     onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                    disabled={
+                      typeof item.stock === "number" &&
+                      item.quantity >= item.stock
+                    }
                   >
                     +
                   </button>
@@ -114,9 +125,9 @@ if (cartItems.length === 0) {
             <span>₹{totalPrice.toLocaleString("en-IN")}</span>
           </div>
 
-          <button className="cart-checkout-btn" type="button">
+          <Link to="/checkout" className="cart-checkout-btn">
             Proceed to Checkout
-          </button>
+          </Link>
         </div>
       </div>
     </main>

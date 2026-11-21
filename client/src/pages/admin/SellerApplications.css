@@ -1,0 +1,554 @@
+
+.seller-applications-page {
+  width: 100%;
+  padding: 30px;
+  color: #1e293b;
+  box-sizing: border-box;
+}
+
+/* Header */
+
+.seller-applications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.seller-applications-header h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.seller-applications-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 14px;
+}
+
+.seller-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.seller-refresh-btn:hover {
+  background: #1d4ed8;
+}
+
+.seller-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Statistics */
+
+.seller-application-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.seller-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.seller-stat-card > svg {
+  font-size: 25px;
+  color: #2563eb;
+}
+
+.seller-stat-card h3 {
+  font-size: 25px;
+  margin: 0 0 5px;
+}
+
+.seller-stat-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.seller-stat-card.pending > svg {
+  color: #d97706;
+}
+
+.seller-stat-card.approved > svg {
+  color: #16a34a;
+}
+
+.seller-stat-card.rejected > svg {
+  color: #dc2626;
+}
+
+/* Search and Filter */
+
+.seller-application-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.seller-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 15px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #64748b;
+}
+
+.seller-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.seller-application-toolbar select {
+  padding: 12px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Table */
+
+.seller-applications-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.seller-applications-table {
+  width: 100%;
+  min-width: 750px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.seller-applications-table th {
+  padding: 16px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.seller-applications-table td {
+  padding: 17px 16px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #475569;
+}
+
+.seller-applications-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.seller-applications-table td strong {
+  display: block;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.seller-applications-table td small {
+  display: block;
+  margin-top: 5px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Status */
+
+.seller-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.seller-status.pending {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.seller-status.approved {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.seller-status.rejected {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+/* Loading, Empty and Error States */
+
+.seller-applications-message,
+.seller-applications-error {
+  padding: 45px 20px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+.seller-applications-error {
+  color: #dc2626;
+}
+
+.seller-applications-error button {
+  display: block;
+  margin: 15px auto 0;
+  padding: 9px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+  .seller-application-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .seller-applications-page {
+    padding: 18px;
+  }
+
+  .seller-applications-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .seller-applications-header h1 {
+    font-size: 23px;
+  }
+
+  .seller-application-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .seller-application-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .seller-search {
+    max-width: none;
+    box-sizing: border-box;
+  }
+
+  .seller-application-toolbar select {
+    width: 100%;
+  }
+}
+
+
+/* Success and Error Messages */
+
+.seller-success-message,
+.seller-error-message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.seller-success-message {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.seller-error-message {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.seller-success-message button,
+.seller-error-message button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* View Button */
+
+.seller-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.seller-view-btn:hover {
+  background: #dbeafe;
+}
+
+/* Review Overlay */
+
+.seller-review-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.65);
+  overflow-y: auto;
+}
+
+.seller-review-panel {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+/* Review Header */
+
+.seller-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.seller-review-header h2 {
+  margin: 0 0 7px;
+  font-size: 23px;
+  color: #1e293b;
+}
+
+.seller-review-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.seller-review-header > button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  cursor: pointer;
+}
+
+/* Application Details */
+
+.seller-review-details {
+  padding: 20px 0;
+}
+
+.seller-review-details h3 {
+  margin: 22px 0 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #2563eb;
+  font-size: 15px;
+}
+
+.seller-review-details h3:first-child {
+  margin-top: 0;
+}
+
+.seller-review-details p {
+  margin: 10px 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.seller-review-details strong {
+  color: #1e293b;
+}
+
+/* Review Actions */
+
+.seller-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.seller-review-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 17px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.seller-approve-btn {
+  background: #16a34a;
+  color: white;
+}
+
+.seller-approve-btn:hover {
+  background: #15803d;
+}
+
+.seller-reject-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.seller-reject-btn:hover {
+  background: #b91c1c;
+}
+
+.seller-cancel-btn {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.seller-cancel-btn:hover {
+  background: #cbd5e1;
+}
+
+.seller-review-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Rejection Form */
+
+.seller-review-actions form {
+  width: 100%;
+}
+
+.seller-review-actions label {
+  display: block;
+  margin-bottom: 9px;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.seller-review-actions textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.seller-review-actions textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.seller-review-actions form p {
+  text-align: right;
+  margin: 7px 0 14px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Mobile Review Panel */
+
+@media (max-width: 600px) {
+  .seller-review-overlay {
+    padding: 10px;
+  }
+
+  .seller-review-panel {
+    padding: 20px;
+    max-height: 95vh;
+  }
+
+  .seller-review-header h2 {
+    font-size: 20px;
+  }
+
+  .seller-review-actions {
+    flex-direction: column;
+  }
+
+  .seller-review-actions button {
+    width: 100%;
+  }
+}

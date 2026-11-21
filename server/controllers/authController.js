@@ -2,6 +2,11 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const {
+  isSmtpConfigured,
+  sendPasswordResetEmail,
+} = require("../services/emailService");
 
 // Register a new customer
 const registerUser = async (req, res) => {
@@ -99,6 +104,13 @@ const loginUser = async (req, res) => {
       });
     }
 
+    if (user.isActive === false) {
+      return res.status(403).json({
+        success: false,
+        message: "This account has been suspended. Contact support.",
+      });
+    }
+
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
@@ -141,8 +153,163 @@ const getMe = async (req, res) => {
   });
 };
 
+
+const forgotPassword = async (req, res) => {
+  try {
+    const email =
+      typeof req.body.email === "string"
+        ? req.body.email.trim().toLowerCase()
+        : "";
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Please enter your email address.",
+      });
+    }
+
+    const user = await User.findOne({ email }).select(
+      "+passwordResetTokenHash +passwordResetTokenExpiresAt"
+    );
+
+    // Email does not exist in MongoDB
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "This email is not registered with ShopSphere.",
+      });
+    }
+
+    // Check SMTP configuration
+    if (!isSmtpConfigured()) {
+      return res.status(503).json({
+        success: false,
+        message: "Email service is not configured. Please try again later.",
+      });
+    }
+
+    // Generate secure random reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // Store only the hashed token in MongoDB
+    const resetTokenHash = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.passwordResetTokenHash = resetTokenHash;
+
+    // Link expires after 30 minutes
+    user.passwordResetTokenExpiresAt = new Date(
+      Date.now() + 30 * 60 * 1000
+    );
+
+    await user.save();
+
+    const clientUrl = (
+      process.env.CLIENT_URL || "http://localhost:5173"
+    ).replace(/\/+$/, "");
+
+    const resetUrl = `${clientUrl}/reset-password/${resetToken}`;
+
+    try {
+      await sendPasswordResetEmail(user.email, resetUrl);
+
+      return res.status(200).json({
+        success: true,
+        message: "Email verified! Password reset link sent successfully.",
+      });
+    } catch (emailError) {
+      console.error(
+        "Password reset email failed:",
+        emailError.message
+      );
+
+      user.passwordResetTokenHash = null;
+      user.passwordResetTokenExpiresAt = null;
+      await user.save();
+
+      return res.status(503).json({
+        success: false,
+        message: "Unable to send email. Please check email configuration.",
+      });
+    }
+  } catch (error) {
+    console.error("Forgot password error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to process your request.",
+    });
+  }
+};
+
+
+const resetPassword = async (req, res) => {
+  try {
+    const resetToken =
+      typeof req.params.token === "string" ? req.params.token : "";
+    const newPassword = req.body.password;
+
+    if (
+      typeof newPassword !== "string" ||
+      newPassword.length < 8
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must contain at least 8 characters.",
+      });
+    }
+
+    if (!resetToken) {
+      return res.status(400).json({
+        success: false,
+        message: "Reset token is required.",
+      });
+    }
+
+    const resetTokenHash = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const user = await User.findOne({
+      passwordResetTokenHash: resetTokenHash,
+      passwordResetTokenExpiresAt: { $gt: new Date() },
+    }).select(
+      "+password +passwordResetTokenHash +passwordResetTokenExpiresAt"
+    );
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Reset link is invalid or has expired.",
+      });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 12);
+    user.passwordResetTokenHash = null;
+    user.passwordResetTokenExpiresAt = null;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Password reset successful. Please log in with your new password.",
+    });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Unable to reset password.",
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
+  forgotPassword,
+  resetPassword,
 };

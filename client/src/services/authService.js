@@ -1,6 +1,8 @@
 
-const API_URL = "http://localhost:5000/api/auth";
-const USER_API_URL = "http://localhost:5000/api/users";
+import { API_BASE_URL } from "../config/api.js";
+
+const API_URL = `${API_BASE_URL}/api/auth`;
+const USER_API_URL = `${API_BASE_URL}/api/users`;
 
 // Login user
 export const loginUser = async (email, password) => {
@@ -137,6 +139,41 @@ export const changeUserPassword = async (
 
   if (!response.ok) {
     throw new Error(data.message || "Password change failed");
+  }
+
+  return data;
+};
+
+export const forgotPassword = async (email) => {
+  const response = await fetch(`${API_URL}/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Unable to request password reset.");
+  }
+
+  return data;
+};
+
+export const resetPassword = async (token, password) => {
+  const response = await fetch(
+    `${API_URL}/reset-password/${encodeURIComponent(token)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Unable to reset password.");
   }
 
   return data;

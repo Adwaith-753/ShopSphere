@@ -63,6 +63,13 @@
   font-size: 65px;
 }
 
+.trending-image img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
 .trending-info {
   padding: 18px;
 }

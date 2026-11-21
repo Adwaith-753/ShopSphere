@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import "./OffersSection.css";
 
 const offers = [
@@ -19,6 +20,8 @@ const offers = [
 ];
 
 function OffersSection() {
+  const navigate = useNavigate();
+
   return (
     <section className="offers-section">
       <h2>Special Offers</h2>
@@ -34,7 +37,20 @@ function OffersSection() {
               <h3>{offer.title}</h3>
               <h4>{offer.discount}</h4>
               <p>{offer.description}</p>
-              <button>Explore Deals</button>
+              <button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/products?search=${encodeURIComponent(
+                      offer.title.includes("Electronics")
+                        ? "Electronics"
+                        : "Fashion"
+                    )}`
+                  )
+                }
+              >
+                Explore Deals
+              </button>
             </div>
           </div>
         ))}

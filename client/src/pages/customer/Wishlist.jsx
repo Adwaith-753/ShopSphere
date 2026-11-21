@@ -1,20 +1,30 @@
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
+
 import { WishlistContext } from "../../context/WishlistContext.jsx";
 import { CartContext } from "../../context/CartContext.jsx";
+import SuccessToast from "../../components/common/SuccessToast.jsx";
+
 import "./Wishlist.css";
 
 function Wishlist() {
+  const [successMessage, setSuccessMessage] = useState("");
+
   const { wishlistItems, removeFromWishlist } =
     useContext(WishlistContext);
 
   const { addToCart } = useContext(CartContext);
 
-  // Move product to cart
+  // Move product from Wishlist to Cart
   const handleAddToCart = (product) => {
     addToCart(product, 1);
+
+    setSuccessMessage(
+      `${product.name} successfully added to your cart!`
+    );
+
     removeFromWishlist(product._id);
   };
 
@@ -23,15 +33,25 @@ function Wishlist() {
     return (
       <main className="wishlist-page">
         <div className="wishlist-empty">
+
+          <SuccessToast
+            message={successMessage}
+            onClose={() => setSuccessMessage("")}
+          />
+
           <Heart size={65} />
+
           <h1>Your Wishlist is Empty</h1>
+
           <p>
             You haven't saved any products yet.
             Explore our products and add your favourites!
           </p>
+
           <Link to="/products" className="wishlist-shop-btn">
             Explore Products
           </Link>
+
         </div>
       </main>
     );
@@ -40,6 +60,12 @@ function Wishlist() {
   return (
     <main className="wishlist-page">
       <div className="wishlist-container">
+
+        <SuccessToast
+          message={successMessage}
+          onClose={() => setSuccessMessage("")}
+        />
+
         <h1>My Wishlist</h1>
 
         <p className="wishlist-count">
@@ -47,9 +73,20 @@ function Wishlist() {
         </p>
 
         <div className="wishlist-grid">
+
           {wishlistItems.map((product) => (
             <div className="wishlist-card" key={product._id}>
+
+              {product.images?.[0]?.url && (
+                <img
+                  className="wishlist-product-image"
+                  src={product.images[0].url}
+                  alt={product.images[0].alt || product.name}
+                />
+              )}
+
               <div className="wishlist-product-info">
+
                 <span className="wishlist-category">
                   {product.category}
                 </span>
@@ -61,9 +98,11 @@ function Wishlist() {
                 <h3>
                   ₹{product.price.toLocaleString("en-IN")}
                 </h3>
+
               </div>
 
               <div className="wishlist-actions">
+
                 <button
                   type="button"
                   className="wishlist-add-btn"
@@ -80,10 +119,14 @@ function Wishlist() {
                 >
                   Remove
                 </button>
+
               </div>
+
             </div>
           ))}
+
         </div>
+
       </div>
     </main>
   );

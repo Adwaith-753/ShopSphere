@@ -1,0 +1,230 @@
+
+/* ========================================
+   ShopSphere - Seller Application Page
+======================================== */
+
+.seller-application-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 24px 50px;
+  color: #1e293b;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.seller-application-page h1 {
+  margin: 0 0 12px;
+  color: #1d4ed8;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.seller-application-page > p {
+  margin: 0 0 30px;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.seller-application-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Form sections */
+
+.seller-application-page section {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  align-items: center;
+  gap: 15px 20px;
+  padding: 25px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.seller-application-page section h2 {
+  grid-column: 1 / -1;
+  margin: 0 0 8px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* Labels */
+
+.seller-application-page section > label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Text inputs, dropdowns and textarea */
+
+.seller-application-page section > input,
+.seller-application-page section > textarea,
+.seller-application-page section > select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.seller-application-page section > input,
+.seller-application-page section > select {
+  min-height: 44px;
+}
+
+.seller-application-page section > textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.seller-application-page section > input:focus,
+.seller-application-page section > textarea:focus,
+.seller-application-page section > select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.seller-application-page section > input::placeholder,
+.seller-application-page section > textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Seller type section */
+
+.seller-application-page section:nth-of-type(1) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.seller-application-page section:nth-of-type(1) label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.seller-application-page input[type="radio"],
+.seller-application-page input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* Seller agreement */
+
+.seller-application-page section:nth-of-type(5) label {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Success and error messages */
+
+.seller-application-page .error-message,
+.seller-application-page .success-message {
+  margin: 0;
+  padding: 13px 16px;
+  border-radius: 7px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.seller-application-page .error-message {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.seller-application-page .success-message {
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+/* Submit button */
+
+.seller-application-page form > button[type="submit"] {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.seller-application-page form > button[type="submit"]:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.seller-application-page form > button[type="submit"]:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Tablet and mobile responsive design */
+
+@media (max-width: 650px) {
+  .seller-application-page {
+    margin: 25px auto;
+    padding: 0 15px 35px;
+  }
+
+  .seller-application-page h1 {
+    font-size: 25px;
+  }
+
+  .seller-application-page section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 18px;
+  }
+
+  .seller-application-page section h2 {
+    font-size: 17px;
+    margin-bottom: 5px;
+  }
+
+  .seller-application-page section > label {
+    margin-top: 5px;
+  }
+
+  .seller-application-page section:nth-of-type(1) {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-application-page section:nth-of-type(5) label {
+    grid-column: 1;
+  }
+}

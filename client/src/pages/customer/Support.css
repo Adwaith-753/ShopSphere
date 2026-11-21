@@ -1,0 +1,37 @@
+.support-page {
+  min-height: calc(100vh - 120px);
+  background: #f8fafc;
+  padding: 50px 20px;
+}
+
+.support-container {
+  width: min(1000px, 100%);
+  margin: 0 auto;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.support-grid article {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  padding: 22px;
+}
+
+.support-grid a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,30 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { Heart, ShoppingCart } from "lucide-react";
+import { useContext, useState } from "react";
+import { Heart, ShoppingCart, Check } from "lucide-react";
 
 import { WishlistContext } from "../../context/WishlistContext.jsx";
 import { CartContext } from "../../context/CartContext.jsx";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import SuccessToast from "../common/SuccessToast.jsx";
 
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
-  // Wishlist information
   const { wishlistItems, addToWishlist, removeFromWishlist } =
     useContext(WishlistContext);
 
-  // Cart information
   const { addToCart } = useContext(CartContext);
-
-  // Authentication information
   const { user } = useContext(AuthContext);
 
-  // Check whether product is already in Wishlist
   const isWishlisted = wishlistItems.some((item) => item._id === product._id);
 
-  // Toggle Wishlist
   const handleWishlist = () => {
     if (!user) {
       navigate("/login", {
@@ -37,10 +34,10 @@ function ProductCard({ product }) {
       removeFromWishlist(product._id);
     } else {
       addToWishlist(product);
+      setSuccessMessage(`${product.name} added to your wishlist.`);
     }
   };
 
-  // Add product to Cart
   const handleAddToCart = () => {
     if (!user) {
       navigate("/login", {
@@ -49,18 +46,19 @@ function ProductCard({ product }) {
       return;
     }
 
+    if (addedToCart) return;
+
     addToCart(product, 1);
-    alert(`${product.name} added to cart!`);
+    setAddedToCart(true);
+    setSuccessMessage(`${product.name} added to your cart.`);
   };
 
-  // View product details
   const handleViewDetails = () => {
     navigate(`/products/${product._id}`);
   };
 
   return (
     <div className="product-card">
-      {/* Wishlist Button */}
       <button
         className={`wishlist-heart-btn ${isWishlisted ? "active" : ""}`}
         type="button"
@@ -70,24 +68,51 @@ function ProductCard({ product }) {
         <Heart size={22} fill={isWishlisted ? "currentColor" : "none"} />
       </button>
 
+      <button
+        type="button"
+        className="product-card-image-button"
+        onClick={handleViewDetails}
+        aria-label={`View ${product.name}`}
+      >
+        {product.images?.[0]?.url ? (
+          <img
+            src={product.images[0].url}
+            alt={product.images[0].alt || product.name}
+            className="product-card-image"
+          />
+        ) : (
+          <div className="product-card-image-placeholder">
+            {product.name}
+          </div>
+        )}
+      </button>
+
       <div className="product-card-info">
         <p>{product.category}</p>
-
         <h3>{product.name}</h3>
-
         <p>{product.description}</p>
 
         <h4>₹{product.price.toLocaleString("en-IN")}</h4>
 
-        {/* Product Action Buttons */}
         <div className="product-card-actions">
           <button
             type="button"
-            className="product-add-cart-btn"
+            className={`product-add-cart-btn ${addedToCart ? "cart-added" : ""}`}
             onClick={handleAddToCart}
+            disabled={addedToCart}
+            aria-live="polite"
           >
-            <ShoppingCart size={17} />
-            Add to Cart
+            {addedToCart ? (
+              <>
+                <Check size={17} />
+                Added to Cart
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={17} />
+                Add to Cart
+              </>
+            )}
           </button>
 
           <button
@@ -99,6 +124,11 @@ function ProductCard({ product }) {
           </button>
         </div>
       </div>
+
+      <SuccessToast
+        message={successMessage}
+        onClose={() => setSuccessMessage("")}
+      />
     </div>
   );
 }

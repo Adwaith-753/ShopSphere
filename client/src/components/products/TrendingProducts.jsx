@@ -1,14 +1,23 @@
 
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getProducts } from "../../services/productService";
 import "./TrendingProducts.css";
 
-const trendingProducts = [
-  { id: 1, name: "Gaming Laptop", price: 59999, emoji: "💻" },
-  { id: 2, name: "Running Shoes", price: 2999, emoji: "👟" },
-  { id: 3, name: "Smart Phone", price: 18999, emoji: "📱" },
-  { id: 4, name: "Digital Camera", price: 25999, emoji: "📷" },
-];
-
 function TrendingProducts() {
+  const [trendingProducts, setTrendingProducts] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProducts()
+      .then((items) =>
+        setTrendingProducts(
+          items.filter((item) => item.isTrending).slice(0, 4)
+        )
+      )
+      .catch(() => setTrendingProducts([]));
+  }, []);
+
   return (
     <section className="trending-section">
       <div className="trending-heading">
@@ -20,17 +29,26 @@ function TrendingProducts() {
 
       <div className="trending-grid">
         {trendingProducts.map((product) => (
-          <div className="trending-card" key={product.id}>
+          <div className="trending-card" key={product._id}>
             <span className="trending-badge">TRENDING</span>
 
             <div className="trending-image">
-              <span>{product.emoji}</span>
+              {product.images?.[0]?.url ? (
+                <img src={product.images[0].url} alt={product.name} />
+              ) : (
+                <span>{product.name}</span>
+              )}
             </div>
 
             <div className="trending-info">
               <h3>{product.name}</h3>
               <p>₹{product.price.toLocaleString("en-IN")}</p>
-              <button>View Product</button>
+              <button
+                type="button"
+                onClick={() => navigate(`/products/${product._id}`)}
+              >
+                View Product
+              </button>
             </div>
           </div>
         ))}

@@ -1,5 +1,6 @@
 
 const User = require("../models/User");
+const SellerApplication = require("../models/SellerApplication");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -301,9 +302,221 @@ const changePassword = async (req, res) => {
 };
 
 
+
+// @desc Submit a seller application
+// @route POST /api/users/seller-application
+// @access Private
+const submitSellerApplication = async (req, res) => {
+  try {
+    const {
+      sellerType,
+      storeName,
+      storeDescription,
+      storeCategory,
+      storeLogo,
+      contactPhone,
+      contactEmail,
+      businessWebsite,
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+      acceptedSellerTerms,
+    } = req.body;
+
+    // Only customers can apply
+    if (req.user.role !== "customer") {
+      return res.status(403).json({
+        success: false,
+        message: "Only customer accounts can apply to become sellers.",
+      });
+    }
+
+    // Check required fields
+    const requiredFields = [
+      sellerType,
+      storeName,
+      storeDescription,
+      storeCategory,
+      contactPhone,
+      contactEmail,
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+    ];
+
+    if (
+      requiredFields.some(
+        (field) => typeof field !== "string" || !field.trim()
+      )
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Please complete all required application fields.",
+      });
+    }
+
+    if (!["individual", "business"].includes(sellerType)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please select a valid seller type.",
+      });
+    }
+
+    if (acceptedSellerTerms !== true) {
+      return res.status(400).json({
+        success: false,
+        message: "You must accept the seller terms.",
+      });
+    }
+
+    if (storeName.trim().length > 100) {
+      return res.status(400).json({
+        success: false,
+        message: "Store name cannot exceed 100 characters.",
+      });
+    }
+
+    if (storeDescription.trim().length > 1000) {
+      return res.status(400).json({
+        success: false,
+        message: "Store description cannot exceed 1000 characters.",
+      });
+    }
+
+    const normalizedEmail = contactEmail.trim().toLowerCase();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(normalizedEmail)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please enter a valid contact email.",
+      });
+    }
+
+    // Check the customer's existing application
+    const existingApplication = await SellerApplication.findOne({
+      user: req.user._id,
+    });
+
+    if (existingApplication?.status === "pending") {
+      return res.status(409).json({
+        success: false,
+        message: "Your seller application is already under review.",
+      });
+    }
+
+    if (existingApplication?.status === "approved") {
+      return res.status(409).json({
+        success: false,
+        message: "Your seller application has already been approved.",
+      });
+    }
+
+    const applicationData = {
+      sellerType,
+      storeName: storeName.trim(),
+      storeDescription: storeDescription.trim(),
+      storeCategory: storeCategory.trim(),
+      storeLogo: typeof storeLogo === "string" ? storeLogo.trim() : "",
+      contactPhone: contactPhone.trim(),
+      contactEmail: normalizedEmail,
+      businessWebsite:
+        typeof businessWebsite === "string"
+          ? businessWebsite.trim()
+          : "",
+      address: address.trim(),
+      city: city.trim(),
+      state: state.trim(),
+      postalCode: postalCode.trim(),
+      country: country.trim(),
+      acceptedSellerTerms: true,
+      status: "pending",
+      reviewedBy: null,
+      reviewedAt: null,
+      rejectionReason: "",
+    };
+
+    let application;
+
+    if (existingApplication) {
+      // Allow a rejected applicant to correct and resubmit
+      Object.assign(existingApplication, applicationData);
+      application = await existingApplication.save();
+    } else {
+      application = await SellerApplication.create({
+        user: req.user._id,
+        ...applicationData,
+      });
+    }
+
+    // Keep the customer's application status in sync
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    user.sellerApplicationStatus = "pending";
+    await user.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "Seller application submitted successfully.",
+      application: {
+        id: application._id,
+        sellerType: application.sellerType,
+        storeName: application.storeName,
+        status: application.status,
+        createdAt: application.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Seller application submission error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to submit seller application.",
+    });
+  }
+};
+
+
+// @desc Get logged-in customer's seller application
+// @route GET /api/users/seller-application
+// @access Private
+const getMySellerApplication = async (req, res) => {
+  try {
+    const application = await SellerApplication.findOne({
+      user: req.user._id,
+    }).select("-__v");
+
+    return res.status(200).json({
+      success: true,
+      application,
+    });
+  } catch (error) {
+    console.error("Seller application fetch error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch seller application.",
+    });
+  }
+};
+
+
 // Export controller functions
 module.exports = {
   updateProfile,
   verifyCurrentPassword,
   changePassword,
+  submitSellerApplication,
+  getMySellerApplication,
 };

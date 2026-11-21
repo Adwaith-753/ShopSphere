@@ -6,17 +6,21 @@ const {
   updateProfile,
   verifyCurrentPassword,
   changePassword,
+  submitSellerApplication,
+  getMySellerApplication,
 } = require("../controllers/userController");
 
 const { protect } = require("../middleware/authMiddleware");
 
-// Update logged-in user's profile
+// Profile management
 router.put("/profile", protect, updateProfile);
 
-// Verify current password
+// Password management
 router.post("/verify-password", protect, verifyCurrentPassword);
-
-// Change password after verification
 router.put("/change-password", protect, changePassword);
+
+// Seller application
+router.post("/seller-application", protect, submitSellerApplication);
+router.get("/seller-application", protect, getMySellerApplication);
 
 module.exports = router;

@@ -218,3 +218,97 @@
     transition: none;
   }
 }
+
+
+/* ========================================
+   Authentication Loading Spinner
+======================================== */
+
+.auth-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.auth-loading-spinner {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: auth-spin 0.7s linear infinite;
+}
+
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-loading-spinner {
+    animation-duration: 2s;
+  }
+}
+
+.auth-forgot-btn {
+  align-self: flex-end;
+  margin-top: -8px;
+  margin-bottom: 2px;
+}
+
+.auth-modal-backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.55);
+  padding: 20px;
+}
+
+.auth-modal,
+.auth-reset-card {
+  width: min(440px, 100%);
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 55px rgba(30, 64, 175, 0.18);
+  padding: 28px;
+}
+
+.auth-modal h2 {
+  margin: 0 0 8px;
+  color: #0f172a;
+  text-align: center;
+}
+
+.auth-modal > p {
+  color: #64748b;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-modal-close {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.auth-reset-card {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

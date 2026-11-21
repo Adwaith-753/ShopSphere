@@ -1,7 +1,10 @@
 
+import { useNavigate } from "react-router-dom";
 import "./HeroBanner.css";
 
 function HeroBanner() {
+  const navigate = useNavigate();
+
   return (
     <section className="hero-banner">
       <div className="hero-content">
@@ -18,7 +21,11 @@ function HeroBanner() {
           Enjoy shopping with amazing deals and offers.
         </p>
 
-        <button className="hero-button">
+        <button
+          type="button"
+          className="hero-button"
+          onClick={() => navigate("/products")}
+        >
           Shop Now
         </button>
       </div>
