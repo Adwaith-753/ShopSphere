@@ -35,5 +35,8 @@ export const validateCoupon = (code, subtotal, token) =>
 
 export const getMyOrders = (token) => orderRequest("", token);
 
+export const getMyOrderById = (orderId, token) =>
+  orderRequest(`/${orderId}`, token);
+
 export const cancelMyOrder = (orderId, token) =>
   orderRequest(`/${orderId}/cancel`, token, { method: "PUT" });

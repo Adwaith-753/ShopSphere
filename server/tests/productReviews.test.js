@@ -1,7 +1,11 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const Product = require("../models/Product");
-const { reportProductReview } = require("../controllers/productController");
+const Order = require("../models/Order");
+const {
+  addProductReview,
+  reportProductReview,
+} = require("../controllers/productController");
 
 const makeResponse = () => ({
   statusCode: 200,
@@ -14,6 +18,66 @@ const makeResponse = () => ({
     this.body = body;
     return this;
   },
+});
+
+test("customers can review products from a delivered order", async (t) => {
+  const originalFindOne = Order.findOne;
+  const originalFindById = Product.findById;
+  const reviews = [];
+  let saved = false;
+  Order.findOne = async () => ({ _id: "507f1f77bcf86cd799439015" });
+  Product.findById = async () => ({
+    reviews,
+    save: async () => {
+      saved = true;
+    },
+  });
+  t.after(() => {
+    Order.findOne = originalFindOne;
+    Product.findById = originalFindById;
+  });
+
+  const response = makeResponse();
+  await addProductReview(
+    {
+      params: { id: "507f1f77bcf86cd799439011" },
+      body: { rating: 5, comment: "Great product." },
+      user: { _id: "507f1f77bcf86cd799439014", role: "customer" },
+    },
+    response
+  );
+
+  assert.equal(response.statusCode, 200);
+  assert.equal(saved, true);
+  assert.equal(reviews.length, 1);
+  assert.equal(reviews[0].rating, 5);
+  assert.equal(reviews[0].comment, "Great product.");
+});
+
+test("customers cannot review products they have not received", async (t) => {
+  const originalFindOne = Order.findOne;
+  const originalFindById = Product.findById;
+  Order.findOne = async () => null;
+  Product.findById = async () => {
+    throw new Error("Product should not be loaded.");
+  };
+  t.after(() => {
+    Order.findOne = originalFindOne;
+    Product.findById = originalFindById;
+  });
+
+  const response = makeResponse();
+  await addProductReview(
+    {
+      params: { id: "507f1f77bcf86cd799439011" },
+      body: { rating: 5, comment: "Great product." },
+      user: { _id: "507f1f77bcf86cd799439014", role: "customer" },
+    },
+    response
+  );
+
+  assert.equal(response.statusCode, 403);
+  assert.equal(response.body.message, "Only customers who received this product can review it.");
 });
 
 test("customers can report another user's review with a reason", async (t) => {

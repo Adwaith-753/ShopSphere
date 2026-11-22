@@ -1,0 +1,126 @@
+.order-details-page {
+  min-height: calc(100vh - 120px);
+  background: #f8fafc;
+  padding: 36px 20px;
+}
+
+.order-details-container {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.order-details-back {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.order-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.order-details-header h1 {
+  color: #1e293b;
+}
+
+.order-details-header p {
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.order-details-section {
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.order-details-section h2 {
+  margin-bottom: 14px;
+  color: #1e293b;
+  font-size: 18px;
+}
+
+.order-details-items {
+  border-top: 1px solid #e2e8f0;
+}
+
+.order-details-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.order-details-item h3 {
+  margin-bottom: 6px;
+}
+
+.order-details-item p {
+  margin: 4px 0;
+  color: #64748b;
+}
+
+.order-details-item a {
+  display: inline-block;
+  margin-top: 6px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.order-details-totals {
+  display: grid;
+  gap: 10px;
+  max-width: 360px;
+  margin: 18px 0 0 auto;
+}
+
+.order-details-totals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.order-details-totals dd {
+  margin: 0;
+}
+
+.order-details-grand-total {
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  font-weight: 700;
+}
+
+.order-details-information {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.order-details-information address {
+  color: #475569;
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.order-details-information p {
+  margin: 8px 0;
+  color: #475569;
+  text-transform: capitalize;
+}
+
+@media (max-width: 600px) {
+  .order-details-header,
+  .order-details-item {
+    align-items: flex-start;
+  }
+
+  .order-details-information {
+    grid-template-columns: 1fr;
+  }
+}

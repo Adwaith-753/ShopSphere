@@ -10,6 +10,7 @@ import Wishlist from "./pages/customer/Wishlist";
 import Profile from "./pages/customer/Profile";
 import Checkout from "./pages/customer/Checkout";
 import Orders from "./pages/customer/Orders";
+import OrderDetails from "./pages/customer/OrderDetails";
 import NotFound from "./pages/customer/NotFound";
 import Support from "./pages/customer/Support";
 import ResetPassword from "./pages/auth/ResetPassword";
@@ -79,6 +80,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetails />
               </ProtectedRoute>
             }
           />

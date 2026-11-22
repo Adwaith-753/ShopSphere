@@ -315,7 +315,7 @@ const getMyOrderById = async (req, res) => {
   const order = await Order.findOne({
     _id: req.params.id,
     user: req.user._id,
-  });
+  }).populate("items.product", "description category images");
 
   if (!order) {
     return res.status(404).json({

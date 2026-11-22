@@ -433,6 +433,13 @@ const addProductReview = async (req, res) => {
       });
     }
 
+    if (req.user.role !== "customer") {
+      return res.status(403).json({
+        success: false,
+        message: "Only customers can review products.",
+      });
+    }
+
     const rating = Number(req.body.rating);
     const comment =
       typeof req.body.comment === "string"
@@ -443,6 +450,13 @@ const addProductReview = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Rating must be a whole number between 1 and 5.",
+      });
+    }
+
+    if (comment.length > 1000) {
+      return res.status(400).json({
+        success: false,
+        message: "Review comments cannot exceed 1000 characters.",
       });
     }
 

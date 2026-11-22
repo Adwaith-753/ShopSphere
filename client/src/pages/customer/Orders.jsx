@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { Link } from "react-router-dom";
 import { cancelMyOrder, getMyOrders } from "../../services/orderService.js";
 import "./Orders.css";
 
@@ -74,11 +75,14 @@ function Orders() {
 
               <div className="order-card-footer">
                 <strong>Total: ₹{order.total.toLocaleString("en-IN")}</strong>
-                {["placed", "confirmed"].includes(order.status) && (
-                  <button type="button" onClick={() => handleCancel(order._id)}>
-                    Cancel Order
-                  </button>
-                )}
+                <div className="order-card-actions">
+                  <Link to={`/orders/${order._id}`}>View details</Link>
+                  {["placed", "confirmed"].includes(order.status) && (
+                    <button type="button" onClick={() => handleCancel(order._id)}>
+                      Cancel Order
+                    </button>
+                  )}
+                </div>
               </div>
             </article>
           ))
